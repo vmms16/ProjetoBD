@@ -17,7 +17,8 @@ import java.util.LinkedList;
 public class MainGUI extends javax.swing.JFrame {
 
     private PessoaService pessoaService= new PessoaService();
-    private ArrayList<Telefone> listaTelefone = new ArrayList<Telefone>();
+    private TelefoneService telefoneService= new TelefoneService();
+    private ArrayList<Telefone> listaTelCadastro = new ArrayList<Telefone>();
     /**
      * Creates new form MainGUI
      */
@@ -165,6 +166,11 @@ public class MainGUI extends javax.swing.JFrame {
         });
 
         botaoExcluirTel.setText("Deletar Tel");
+        botaoExcluirTel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoExcluirTelActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Numero: ");
 
@@ -297,7 +303,19 @@ public class MainGUI extends javax.swing.JFrame {
         pessoa.setEndereco(enderecoString);
         pessoa.setEmail(emailString);
         
+        for (int i=0 ; i<this.listaTelefones.size(); i++){
+            Telefone novoTel= this.listaTelefones.get(i);
+            novoTel.setCodigoPessoa(codpessoaString);
+            this.listaTelCadastro.add(novoTel);
+            
+        }
+        
+        
         this.pessoaService.cadastrarPessoa(pessoa);
+        this.telefoneService.cadastrarListaTelefone(listaTelCadastro);
+        
+        this.listaTelefones.clear();
+        this.listaTelCadastro.clear();
         
         
     }//GEN-LAST:event_botaoCadastrarActionPerformed
@@ -327,6 +345,14 @@ public class MainGUI extends javax.swing.JFrame {
     private void numeroTfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_numeroTfActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_numeroTfActionPerformed
+
+    private void botaoExcluirTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirTelActionPerformed
+        // TODO add your handling code here:
+        
+        int telSelecionado = this.tabelaTel.getSelectedRow();
+        
+        this.listaTelefones.remove(telSelecionado);
+    }//GEN-LAST:event_botaoExcluirTelActionPerformed
 
     /**
      * @param args the command line arguments
