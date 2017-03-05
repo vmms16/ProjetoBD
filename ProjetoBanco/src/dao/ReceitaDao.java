@@ -4,6 +4,7 @@ package dao;
 import java.util.ArrayList;
 
 import dominio.Receita;
+import java.sql.SQLException;
 
 
 public class ReceitaDao {
@@ -168,5 +169,30 @@ public class ReceitaDao {
 		
 	}
 	
-	
+
+        public boolean existReceita(Receita receita){
+            
+            String codpessoa = receita.getCodigoPessoa();
+            String codreceita = receita.getCodReceita();
+            
+            try{
+                db.conectar();
+                String query = "SELECT * FROM receita WHERE codpessoa='"+codpessoa+"' AND codreceita="+codreceita+";";
+                db.resultset= db.statement.executeQuery(query);
+                db.statement= db.connection.createStatement();
+                
+                
+                
+                if(db.resultset.next()){
+                    return true;
+                }else{
+                    return false;
+                }
+                
+                
+            }catch(SQLException e){
+                System.out.println("Erro :"+e);
+            }
+            return false;
+        }
 }

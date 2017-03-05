@@ -1,6 +1,7 @@
 package dao;
 
 import dominio.Pessoa;
+import java.sql.SQLException;
 
 public class PessoaDao {
 	private DataBase db=new DataBase(); 
@@ -20,7 +21,7 @@ public class PessoaDao {
 				String nome= db.resultset.getString("nome");
 				String endereco= db.resultset.getString("endereco");
 				String email= db.resultset.getString("email");
-				System.out.println("ID: "+codPessoa+" Nome: "+nome+" Endereço: "+endereco+" E-mail: "+email);
+				System.out.println("ID: "+codPessoa+" Nome: "+nome+" Endereï¿½o: "+endereco+" E-mail: "+email);
 			}
 			
 			db.desconectar();
@@ -111,10 +112,29 @@ public class PessoaDao {
 		
 		return null;
 	}
-	
-	
-}
+        
+        public boolean existPessoa(String codpessoa){
+            
 
+            try{
+                db.conectar();
+                String query= "SELECT * FROM pessoa WHERE codpessoa='"+codpessoa+"';";
+                db.resultset= db.statement.executeQuery(query);
+                db.statement= db.connection.createStatement();
+                
+                if(db.resultset.next()){
+                    return true;
+                }else{
+                    return false;
+                }
+            }catch(SQLException e){
+                System.out.println("Erro: "+e);
+        }
+            return false;
+		
+    
+        }
+}
 
 
 

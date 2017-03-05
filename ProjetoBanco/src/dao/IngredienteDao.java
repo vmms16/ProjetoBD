@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import dominio.Ingrediente;
 import dominio.Receita;
+import java.sql.SQLException;
 
 
 public class IngredienteDao {
@@ -21,21 +22,21 @@ public class IngredienteDao {
 			
 			while(db.resultset.next()){
 				String codReceita= db.resultset.getString("codReceita");
-				String seqIngrediente=db.resultset.getString("seqIngrediente");
+				int seqIngrediente=db.resultset.getInt("seqIngrediente");
 				String descricao=db.resultset.getString("descricao");
 				String quantidade=db.resultset.getString("quantidade");
 				String unidade=db.resultset.getString("unidade");
 				
 				System.out.println("Codigo R.: "+codReceita+
 								   "Sequencia do Ingrediente: "+ seqIngrediente +
-								   "Descrição:  "+ descricao +
+								   "Descriï¿½ï¿½o:  "+ descricao +
 								   "Quantidade: " + quantidade +
 								   "Unidade: " + unidade);
 				}
 			
 			db.desconectar();
 			
-			}catch(Exception e){
+			}catch(SQLException e){
 			System.out.println("Erro: "+e);
 		}
 	}
@@ -43,10 +44,10 @@ public class IngredienteDao {
 	public void inserirIngrediente(Ingrediente ingrediente){
 			
 			String codReceita= ingrediente.getCodigoReceita();
-			String seqIngrediente= ingrediente.getSeqIngrdiente();
+			String seqIngrediente= String.valueOf(ingrediente.getSeqIngrdiente());
 			String descricao= ingrediente.getDescricao();
 			String quantidade= Float.toString(ingrediente.getQuantidade());
-			String unidade=Integer.toString(ingrediente.getUnidade());
+			String unidade=ingrediente.getUnidade();
 			
 			try{
 				db.conectar();
@@ -63,10 +64,10 @@ public class IngredienteDao {
 	public void atualizarIngrediente(Ingrediente ingrediente){
 			
 			String codReceita= ingrediente.getCodigoReceita();
-			String seqIngrediente= ingrediente.getSeqIngrdiente();
+			String seqIngrediente= String.valueOf(ingrediente.getSeqIngrdiente());
 			String descricao= ingrediente.getDescricao();
 			String quantidade= Float.toString(ingrediente.getQuantidade());
-			String unidade=Integer.toString(ingrediente.getUnidade());
+			String unidade=ingrediente.getUnidade();
 			
 			
 			
@@ -89,7 +90,7 @@ public class IngredienteDao {
 	public void deletarIngrediente(Ingrediente ingrediente){
 			
 			String codReceita= ingrediente.getCodigoReceita();
-			String seqIngrediente= ingrediente.getSeqIngrdiente();
+			String seqIngrediente= String.valueOf(ingrediente.getSeqIngrdiente());
 			
 			try{
 				db.conectar();
@@ -119,7 +120,7 @@ public class IngredienteDao {
 					
 					
 					String codReceita= db.resultset.getString("codReceita");
-					String seqIngrediente=db.resultset.getString("seqIngrediente");
+					int seqIngrediente=db.resultset.getInt("seqIngrediente");
 					String descricao=db.resultset.getString("descricao");
 					String quantidade=db.resultset.getString("quantidade");
 					String unidade=db.resultset.getString("unidade");
@@ -129,7 +130,7 @@ public class IngredienteDao {
 					ingrediente.setDescricao(descricao);
 					ingrediente.setQuantidade(Float.parseFloat(quantidade));
 					ingrediente.setSeqIngrdiente(seqIngrediente);
-					ingrediente.setUnidade(Integer.parseInt(unidade));
+					ingrediente.setUnidade(unidade);
 					
 					listaIngrediente.add(ingrediente);
 					
@@ -144,7 +145,18 @@ public class IngredienteDao {
 			} return null;
 		}
 		
-	
+               public void cadastrarListaIngredientes(ArrayList<Ingrediente> listaIngrediente){
+                   
+                   try{
+                       db.conectar();
+                       for( int i=0; i<listaIngrediente.size();i++){
+                           Ingrediente ingrediente= listaIngrediente.get(i);
+                           this.inserirIngrediente(ingrediente);
+                       }
+                   }catch(Exception e){
+                       System.out.println("Erro: "+e);
+                   }
+               }
 		
 		
 	}

@@ -28,6 +28,10 @@ public class ReceitaService {
 		return new ReceitaDao().getTodasReceita(titulo);
 		
 	}
+        
+        public boolean existeReceita(Receita receita){
+            return new ReceitaDao().existReceita(receita);
+        }
 	
 	
 
