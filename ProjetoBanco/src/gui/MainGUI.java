@@ -9,6 +9,8 @@ import dominio.*;
 import java.util.ArrayList;
 import service.*;
 import java.util.LinkedList;
+import validacoes.ValidacaoPessoa;
+import validacoes.ValidacaoTelefone;
 
 /**
  *
@@ -298,6 +300,9 @@ public class MainGUI extends javax.swing.JFrame {
         String enderecoString= String.valueOf(this.enderecoTf.getText());
         String emailString= String.valueOf(this.emailTf.getText());
         
+        boolean existPessoa= ValidacaoPessoa.existePessoaCadastrada(codpessoaString);
+        
+        if(!existPessoa){
         pessoa.setNome(nomeString);
         pessoa.setCodigo(codpessoaString);
         pessoa.setEndereco(enderecoString);
@@ -316,7 +321,16 @@ public class MainGUI extends javax.swing.JFrame {
         
         this.listaTelefones.clear();
         this.listaTelCadastro.clear();
+        this.nomeTf.setText("");
+        this.codpessoaTf.setText("");
+        this.numeroTf.setText("");
+        this.emailTf.setText("");
+        this.enderecoTf.setText("");
+        this.tipoTf.setText("");
         
+        }else{
+            //Mensagem de Erro
+        }
         
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
@@ -337,7 +351,12 @@ public class MainGUI extends javax.swing.JFrame {
             tel.setNumero(numeroString);
             tel.setTipo(tipoString);
             
-            this.listaTelefones.add(tel);
+            boolean existTelefone= ValidacaoTelefone.existInList(this.listaTelefones, tel);
+            if(!existTelefone){
+                this.listaTelefones.add(tel);
+            }else{
+                //Mensagem de Erro
+            }
        
         }
     }//GEN-LAST:event_botaoAddTelActionPerformed
