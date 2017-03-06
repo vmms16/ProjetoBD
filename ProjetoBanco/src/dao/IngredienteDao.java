@@ -106,7 +106,7 @@ public class IngredienteDao {
 		//Testar
 	public ArrayList<Ingrediente> getListaIngredientesReceita(Receita receita){
 			
-			String codigoReceita=receita.getCodigoPessoa();
+			String codigoReceita=receita.getCodReceita();
 			ArrayList<Ingrediente> listaIngrediente= new ArrayList<Ingrediente>();
 			
 			try{

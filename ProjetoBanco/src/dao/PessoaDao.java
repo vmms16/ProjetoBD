@@ -2,6 +2,7 @@ package dao;
 
 import dominio.Pessoa;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class PessoaDao {
 	private DataBase db=new DataBase(); 
@@ -79,7 +80,7 @@ public class PessoaDao {
 		try{
 			
 			db.conectar();
-			String query= "DELETE FROM pessoa WHERE codpessoa="+codpessoa+";";
+			String query= "DELETE FROM pessoa WHERE codpessoa='"+codpessoa+"';";
 			db.statement.executeUpdate(query);
 			db.desconectar();
 		
@@ -133,6 +134,45 @@ public class PessoaDao {
             return false;
 		
     
+        }
+        
+        public ArrayList<Pessoa> getTodasPessoas(){
+            ArrayList<Pessoa> listaPessoas = new ArrayList();
+            
+            try{
+			db.conectar();
+			String query= "SELECT * FROM PESSOA";
+			db.resultset =db.statement.executeQuery(query);
+			db.statement=db.connection.createStatement();
+			
+			
+			while(db.resultset.next()){
+				String codPessoa= db.resultset.getString("codpessoa");
+				String nome= db.resultset.getString("nome");
+				String endereco= db.resultset.getString("endereco");
+				String email= db.resultset.getString("email");
+				
+                                Pessoa pessoa= new Pessoa();
+                                pessoa.setCodigo(codPessoa);
+                                pessoa.setEmail(email);
+                                pessoa.setNome(nome);
+                                pessoa.setEndereco(endereco);
+                                
+                                listaPessoas.add(pessoa);
+                                
+			}
+			
+			db.desconectar();
+                        
+                        return listaPessoas;
+				
+				
+		}catch (SQLException e){
+			System.out.println("Erro "+ e.getMessage());
+		}
+            
+            
+            return null;
         }
 }
 

@@ -76,7 +76,7 @@ public class ReceitaDao {
 	
 	public void deletarReceita(Receita receita){
 		
-		String codreceita= receita.getCodigoPessoa();
+		String codreceita= receita.getCodReceita();
 		//String titulo = receita.getTitulo();
 		//String codpessoa= receita.getCodigoPessoa();
 		//String modopreparo= receita.getModoPreparo();
@@ -84,7 +84,7 @@ public class ReceitaDao {
 		
 		try{
 			db.conectar();
-			String query="DELETE FROM receita WHERE codreceita="+codreceita+";";
+			String query="DELETE FROM receita WHERE codreceita='"+codreceita+"';";
 			db.statement.executeUpdate(query);
 			db.desconectar();
 		}catch (Exception e){
@@ -118,10 +118,12 @@ public class ReceitaDao {
 				receita.setTitulo(titulo);
 				receita.setCodReceita(codreceita);
 				
+                               
+                                
 				receitas.add(receita);
-				return receitas;
+				
 			}
-			
+			return receitas;
 		}catch (Exception e){
 			System.out.println("Erro: "+e);
 		}

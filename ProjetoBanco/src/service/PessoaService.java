@@ -3,6 +3,7 @@ package service;
 import dominio.Pessoa;
 
 import dao.*;
+import java.util.ArrayList;
 
 
 public class PessoaService {
@@ -29,5 +30,8 @@ public class PessoaService {
 		String nome= pessoa.getNome();
 		return new PessoaDao().getPessoa(nome);
 	}
-
+        
+        public ArrayList<Pessoa> getTodasPessoas(){
+            return new PessoaDao().getTodasPessoas();
+        }
 }

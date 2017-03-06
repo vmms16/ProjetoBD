@@ -24,11 +24,13 @@ public class IngredienteService {
 	}
 	
 	public ArrayList<Ingrediente> getListaIngredientesReceita(Receita receita){
-		return null;
+		return this.ingredienteDao.getListaIngredientesReceita(receita);
 	}
         
         public void cadastrarListaIngrediente(ArrayList<Ingrediente> listaIngrediente){
             ingredienteDao.cadastrarListaIngredientes(listaIngrediente);
         }
+        
+       
 
 }
