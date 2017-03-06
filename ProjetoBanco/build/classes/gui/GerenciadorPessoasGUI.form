@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
+  <NonVisualComponents>
+    <Component class="java.util.List" name="listaPessoas">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ArrayList&lt;Pessoa&gt;()"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="listaPessoas = org.jdesktop.observablecollections.ObservableCollections.observableList(listaPessoas);"/>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Pessoa&gt;"/>
+      </AuxValues>
+    </Component>
+  </NonVisualComponents>
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="3"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
+  </SyntheticProperties>
+  <AuxValues>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
+    <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+  </AuxValues>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jScrollPane1" min="-2" pref="381" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="botaoCadastrar" pref="120" max="32767" attributes="0"/>
+                  <Component id="botaoExcluirPessoa" max="32767" attributes="0"/>
+                  <Component id="botaoEditarPessoa" alignment="0" max="32767" attributes="0"/>
+                  <Component id="botaoVoltar" alignment="0" max="32767" attributes="0"/>
+                  <Component id="botaoVisualizarPessoa" alignment="0" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <Group type="103" groupAlignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
+              <EmptySpace pref="95" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jScrollPane1" min="-2" pref="296" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="botaoCadastrar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                      <Component id="botaoExcluirPessoa" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                      <Component id="botaoEditarPessoa" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                      <Component id="botaoVisualizarPessoa" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="botaoVoltar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+      </Group>
+    </DimensionLayout>
+  </Layout>
+  <SubComponents>
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTable" name="tabelaPessoa">
+          <BindingProperties>
+            <BindingProperty name="elements" source="listaPessoas" target="tabelaPessoa" targetPath="elements" updateStrategy="0" immediately="true">
+              <Subbinding sourcePath="${codigo}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${nome}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${email}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
+              <Subbinding sourcePath="${endereco}">
+                <BindingParameter name="javax.swing.binding.ParameterKeys.COLUMN_CLASS" value="String.class"/>
+              </Subbinding>
+            </BindingProperty>
+          </BindingProperties>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JToggleButton" name="botaoCadastrar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cadastrar Pessoa"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoCadastrarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="botaoExcluirPessoa">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Excluir Pessoa"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoExcluirPessoaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="botaoEditarPessoa">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Editar Pessoa"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="botaoVoltar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Voltar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="botaoVisualizarPessoa">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Visualizar Pessoa"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botaoVisualizarPessoaActionPerformed"/>
+      </Events>
+    </Component>
+  </SubComponents>
+</Form>
