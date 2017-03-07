@@ -152,6 +152,9 @@ public class GerenciadorReceitasGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoAddReceitaActionPerformed
 
     private void botaoVisualizarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVisualizarReceitaActionPerformed
+        
+        try{
+        
         ReceitaCadastroGUI cadastroReceitaGUI= new ReceitaCadastroGUI();
         int receitaSelecionada = this.tabelaReceitas.getSelectedRow();
         Receita receita = this.listaReceitas.get(receitaSelecionada);
@@ -161,17 +164,24 @@ public class GerenciadorReceitasGUI extends javax.swing.JFrame {
         this.setVisible(false);
         this.setDefaultCloseOperation(GerenciadorReceitasGUI.EXIT_ON_CLOSE);
         
-        
+        } catch(ArrayIndexOutOfBoundsException e){
+            ErroItem erro = new ErroItem();
+            erro.setVisible(true);
+        }
         
     }//GEN-LAST:event_botaoVisualizarReceitaActionPerformed
 
     private void botaoExcluirReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirReceitaActionPerformed
         
+        try{
         int receitaSelecionada = this.tabelaReceitas.getSelectedRow();
         Receita receita = this.listaReceitas.get(receitaSelecionada);
         this.receitaService.deletarReceita(receita);
         this.listaReceitas.remove(receitaSelecionada);
-        
+        }catch(ArrayIndexOutOfBoundsException e){
+            ErroItem erro = new ErroItem();
+            erro.setVisible(true);
+        }
         
     }//GEN-LAST:event_botaoExcluirReceitaActionPerformed
 

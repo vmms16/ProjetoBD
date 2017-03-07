@@ -158,7 +158,7 @@ public class PessoaCadastroGUI extends javax.swing.JFrame {
         jScrollPane5.setViewportView(tabelaTel);
 
         botaoCancelar.setFont(new java.awt.Font("MV Boli", 1, 14)); // NOI18N
-        botaoCancelar.setText("Cancelar");
+        botaoCancelar.setText("Voltar");
 
         botaoAddTel.setText("Add Tel");
         botaoAddTel.addActionListener(new java.awt.event.ActionListener() {
@@ -302,37 +302,43 @@ public class PessoaCadastroGUI extends javax.swing.JFrame {
         
         boolean existPessoa= ValidacaoPessoa.existePessoaCadastrada(codpessoaString);
         
-        if(!existPessoa){
-            pessoa.setNome(nomeString);
-            pessoa.setCodigo(codpessoaString);
-            pessoa.setEndereco(enderecoString);
-            pessoa.setEmail(emailString);
-
-            for (int i=0 ; i<this.listaTelefones.size(); i++){
-                Telefone novoTel= this.listaTelefones.get(i);
-                novoTel.setCodigoPessoa(codpessoaString);
-                this.listaTelCadastro.add(novoTel);
-
-            }
-
-
-            this.pessoaService.cadastrarPessoa(pessoa);
-            this.telefoneService.cadastrarListaTelefone(listaTelCadastro);
-
-            this.listaTelefones.clear();
-            this.listaTelCadastro.clear();
-            this.nomeTf.setText("");
-            this.codpessoaTf.setText("");
-            this.numeroTf.setText("");
-            this.emailTf.setText("");
-            this.enderecoTf.setText("");
-            this.tipoTf.setText("");
-        
-        }else{
+        if(nomeString.equals("")){
             ErroPessoa erroPessoa= new ErroPessoa();
+            erroPessoa.setMensagemErro("Insira o nome do cozinheiro");
             erroPessoa.setVisible(true);
+            
+        }else{
+            if(!existPessoa){
+                pessoa.setNome(nomeString);
+                pessoa.setCodigo(codpessoaString);
+                pessoa.setEndereco(enderecoString);
+                pessoa.setEmail(emailString);
+
+                for (int i=0 ; i<this.listaTelefones.size(); i++){
+                    Telefone novoTel= this.listaTelefones.get(i);
+                    novoTel.setCodigoPessoa(codpessoaString);
+                    this.listaTelCadastro.add(novoTel);
+
+                }
+
+
+                this.pessoaService.cadastrarPessoa(pessoa);
+                this.telefoneService.cadastrarListaTelefone(listaTelCadastro);
+
+                this.listaTelefones.clear();
+                this.listaTelCadastro.clear();
+                this.nomeTf.setText("");
+                this.codpessoaTf.setText("");
+                this.numeroTf.setText("");
+                this.emailTf.setText("");
+                this.enderecoTf.setText("");
+                this.tipoTf.setText("");
+
+            }else{
+                ErroPessoa erroPessoa= new ErroPessoa();
+                erroPessoa.setVisible(true);
+            }
         }
-        
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     public void setTextField(Pessoa pessoa){
@@ -363,8 +369,12 @@ public class PessoaCadastroGUI extends javax.swing.JFrame {
 
     private void botaoAddTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAddTelActionPerformed
         Telefone tel= new Telefone();
-        if(this.numeroTf.getText()!=null){
-            String numeroString= String.valueOf(this.numeroTf.getText());
+        String numeroString= String.valueOf(this.numeroTf.getText());
+        if(numeroString.equals("")){
+            ErroTelefone erroTelefone= new ErroTelefone();
+            erroTelefone.setVisible(true);
+        } else {
+            //String numeroString= String.valueOf(this.numeroTf.getText());
             String tipoString= String.valueOf(this.tipoTf.getText());
             
             tel.setNumero(numeroString);
@@ -377,7 +387,6 @@ public class PessoaCadastroGUI extends javax.swing.JFrame {
                 ErroTelefone erroTelefone= new ErroTelefone();
                 erroTelefone.setVisible(true);
             }
-       
         }
     }//GEN-LAST:event_botaoAddTelActionPerformed
 
@@ -391,6 +400,8 @@ public class PessoaCadastroGUI extends javax.swing.JFrame {
         int telSelecionado = this.tabelaTel.getSelectedRow();
         
         this.listaTelefones.remove(telSelecionado);
+        
+        
     }//GEN-LAST:event_botaoExcluirTelActionPerformed
 
     /**

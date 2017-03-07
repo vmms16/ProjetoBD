@@ -335,32 +335,45 @@ public class ReceitaCadastroGUI extends javax.swing.JFrame {
         receita.setData(dataString);
         receita.setModoPreparo(modopreparoString);
         
+        if(!codReceitaString.equals("") && !codPessoaString.equals("") && !tituloString.equals("")){
         
-        boolean existReceita= receitaService.existeReceita(receita);
-        boolean existPessoa= ValidacaoPessoa.existePessoaCadastrada(codPessoaString);
+            boolean existReceita= receitaService.existeReceita(receita);
+            boolean existPessoa= ValidacaoPessoa.existePessoaCadastrada(codPessoaString);
         
-        if(!codReceitaString.equals("")){
-            if( !existReceita && existPessoa){
+            if(existPessoa){
+                
+                if(!existReceita){
                 
                 
-                for(int i=0; i<this.listaIngredientes.size(); i++){
-                    Ingrediente ing= this.listaIngredientes.get(i);
-                    ing.setCodigoReceita(codReceitaString);
-                    this.listaIngredientesCadastrar.add(ing);
+                    for(int i=0; i<this.listaIngredientes.size(); i++){
+                        Ingrediente ing= this.listaIngredientes.get(i);
+                        ing.setCodigoReceita(codReceitaString);
+                        this.listaIngredientesCadastrar.add(ing);
+                    }
+                    receitaService.cadastrarReceita(receita);
+                    ingredienteService.cadastrarListaIngrediente(listaIngredientesCadastrar);
+                    this.listaIngredientes.clear();
+                    this.listaIngredientesCadastrar.clear();
+                    ConfirmacaoReceita confirmacao= new ConfirmacaoReceita();
+                    confirmacao.setVisible(true);
+                }else{
+                    ErroCodigo erroCodigo= new ErroCodigo();
+                    erroCodigo.setVisible(true);
+
+                    
                 }
-                receitaService.cadastrarReceita(receita);
-                ingredienteService.cadastrarListaIngrediente(listaIngredientesCadastrar);
-                this.listaIngredientes.clear();
-                this.listaIngredientesCadastrar.clear();
                 
             }else{
-                //caso ja existir receita com o mesmo codigo
-                //Não existir pessoa cadastrada
+                
+                ErroCodigo erroCodPessoa= new ErroCodigo();
+                erroCodPessoa.setMensagemErro("Pessoa não cadastrada!");
+                erroCodPessoa.setVisible(true);
             }
             
             
         }else{
-           // Caso o codigo da receita for nulo
+           ErroReceita erro= new ErroReceita();
+           erro.setVisible(true);
 
             
         }
@@ -378,8 +391,11 @@ public class ReceitaCadastroGUI extends javax.swing.JFrame {
         String unidadeString= String.valueOf(this.unidadeIngredienteTf.getText());
         
         
-        if(this.quantidadeIngredienteTf.getText().equals("") || this.quantidadeIngredienteTf.getText().equals("")){
+        if(this.quantidadeIngredienteTf.getText().equals("") || this.seqIngredienteTf.getText().equals("")){
             //Mensagem de erro
+            ErroIngrediente erro = new ErroIngrediente();
+            erro.setMensagemErro("Seq. Ingrediente em branco");
+            erro.setVisible(true);
         
         } else {
             int seqIngredienteInt = Integer.valueOf(this.seqIngredienteTf.getText());
@@ -398,6 +414,8 @@ public class ReceitaCadastroGUI extends javax.swing.JFrame {
                 this.listaIngredientes.add(ingrediente);
             }else{
                 //Mensagem de erro;
+                ErroIngrediente erro = new ErroIngrediente();
+                erro.setVisible(true);
             }
         }
     }//GEN-LAST:event_botaoAddIngredienteActionPerformed
@@ -417,6 +435,7 @@ public class ReceitaCadastroGUI extends javax.swing.JFrame {
         this.botaoAddIngrediente.setVisible(false);
         this.botaoExcluirIngrediente.setEnabled(false);
         this.botaoExcluirIngrediente.setVisible(false);
+        this.remove(this.botaoCadastrarReceita);
         
         for( int i=0; i<listaIngredientesReceita.size();i++){
             Ingrediente ingrediente= listaIngredientesReceita.get(i);

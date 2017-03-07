@@ -144,14 +144,25 @@ public class GerenciadorPessoasGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoCadastrarActionPerformed
 
     private void botaoExcluirPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluirPessoaActionPerformed
+        
+        try{
+            
+        
         int pessoaSelecionada = this.tabelaPessoa.getSelectedRow();
         Pessoa pessoa=this.listaPessoas.get(pessoaSelecionada); 
         this.pessoaService.deletarPessoa(pessoa);
         this.listaPessoas.remove(pessoaSelecionada);
         
+        }catch(ArrayIndexOutOfBoundsException e){
+            ErroItem erro = new ErroItem();
+            erro.setVisible(true);
+        }
     }//GEN-LAST:event_botaoExcluirPessoaActionPerformed
 
     private void botaoVisualizarPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVisualizarPessoaActionPerformed
+       
+        try{
+        
        int pessoaSelecionada = this.tabelaPessoa.getSelectedRow();
        Pessoa pessoa = this.listaPessoas.get(pessoaSelecionada);
        PessoaCadastroGUI pessoaCadastroGUI = new PessoaCadastroGUI();
@@ -159,6 +170,12 @@ public class GerenciadorPessoasGUI extends javax.swing.JFrame {
        pessoaCadastroGUI.setVisible(true);
        this.setVisible(false);
        this.setDefaultCloseOperation(GerenciadorPessoasGUI.EXIT_ON_CLOSE);
+       
+        }catch(ArrayIndexOutOfBoundsException e){
+            ErroItem erro = new ErroItem();
+            erro.setVisible(true);
+        }
+       
     }//GEN-LAST:event_botaoVisualizarPessoaActionPerformed
 
     /**
