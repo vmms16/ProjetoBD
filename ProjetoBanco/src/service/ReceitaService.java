@@ -32,6 +32,10 @@ public class ReceitaService {
         public boolean existeReceita(Receita receita){
             return new ReceitaDao().existReceita(receita);
         }
+
+    public void atualizarReceita(Receita receita) {
+        receitaDao.atualizarReceita(receita);
+    }
 	
 	
 

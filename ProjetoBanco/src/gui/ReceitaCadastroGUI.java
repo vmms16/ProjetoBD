@@ -422,7 +422,7 @@ public class ReceitaCadastroGUI extends javax.swing.JFrame {
 
     public void setTextField(Receita receita, ArrayList<Ingrediente> listaIngredientesReceita){
         this.tituloreceitaTf.setText(receita.getTitulo());
-        this.codpessoaReceitaTf.setText(receita.getCodReceita());
+        this.codpessoaReceitaTf.setText(receita.getCodigoPessoa());
         this.datareceitaTf.setText(receita.getData());
         this.modepreparoTf.setText(receita.getModoPreparo());
         this.codreceitaTf.setText(receita.getCodReceita());

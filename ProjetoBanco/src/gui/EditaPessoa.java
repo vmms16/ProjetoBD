@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import service.PessoaService;
 import service.TelefoneService;
 import validacoes.ValidacaoPessoa;
+import validacoes.ValidacaoTelefone;
 
 /**
  *
@@ -21,15 +22,14 @@ public class EditaPessoa extends javax.swing.JFrame {
 
     private PessoaService pessoaService= new PessoaService();
     private TelefoneService telefoneService= new TelefoneService();
-    private ArrayList<Telefone> listaTelCadastro = telefoneService.listaTodosTelefones();
+    private Sessao sessao= Sessao.getInstancia();
+    private ArrayList<Telefone> listaTelCadastro = new ArrayList();
+    
     
     public EditaPessoa() {
         initComponents();
   
-        for(int i=0; i<this.listaTelCadastro.size(); i++){
-            Telefone telefone = this.listaTelCadastro.get(i);
-            this.listaTelefones.add(telefone);
-        }
+   
     }
 
     /**
@@ -67,7 +67,7 @@ public class EditaPessoa extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("MV Boli", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 204, 0));
-        jLabel1.setText("Cadastro Pessoa");
+        jLabel1.setText("Editar Pessoa");
 
         jLabel2.setText("Nome:");
 
@@ -113,8 +113,18 @@ public class EditaPessoa extends javax.swing.JFrame {
         bindingGroup.addBinding(binding);
 
         botaoAddTel.setText("Add Tel");
+        botaoAddTel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoAddTelActionPerformed(evt);
+            }
+        });
 
         botaoExcluiTel.setText("Excluir Tel");
+        botaoExcluiTel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoExcluiTelActionPerformed(evt);
+            }
+        });
 
         botaoAtualizar.setText("Atualizar");
         botaoAtualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -124,6 +134,11 @@ public class EditaPessoa extends javax.swing.JFrame {
         });
 
         botaoCancelar.setText("Cancelar");
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -172,7 +187,7 @@ public class EditaPessoa extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(botaoExcluiTel))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(138, 138, 138)
+                        .addGap(198, 198, 198)
                         .addComponent(jLabel1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -281,6 +296,58 @@ public class EditaPessoa extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_botaoAtualizarActionPerformed
+public void setTextField(Pessoa pessoa, ArrayList<Telefone> listaTelefone){
+        this.txtNome.setText(pessoa.getNome());
+        this.txtCodPessoa.setText(pessoa.getCodigo());
+        this.txtEndereco.setText(pessoa.getEndereco());
+        this.txtEmail.setText(pessoa.getEmail());
+        
+        
+        for( int i=0; i<listaTelefone.size();i++){
+            Telefone telefone= listaTelefone.get(i);
+            this.listaTelefones.add(telefone);
+        }
+        
+    }
+    public void setTextField(Pessoa pessoa) {
+         //To change body of generated methods, choose Tools | Templates.
+        this.txtNome.setText(pessoa.getNome());
+        this.txtEmail.setText(pessoa.getEmail());
+        this.txtCodPessoa.setText(pessoa.getCodigo());
+        this.txtEndereco.setText(pessoa.getEndereco());
+        
+    }
+    
+    private void botaoAddTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoAddTelActionPerformed
+       Telefone tel= new Telefone();
+        if(this.txtNumeroTel.getText()!=null){
+            String numeroString= String.valueOf(this.txtNumeroTel.getText());
+            String tipoString= String.valueOf(this.txtTipoTel.getText());
+            
+            tel.setNumero(numeroString);
+            tel.setTipo(tipoString);
+            
+            boolean existTelefone= ValidacaoTelefone.existInList(this.listaTelefones, tel);
+            if(!existTelefone){
+                this.listaTelefones.add(tel);
+            }else{
+                //Mensagem de Erro
+            }
+        }
+    }//GEN-LAST:event_botaoAddTelActionPerformed
+
+    private void botaoExcluiTelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoExcluiTelActionPerformed
+        int telSelecionado = this.tabelaTelefones.getSelectedRow();
+        
+        this.listaTelefones.remove(telSelecionado);
+    }//GEN-LAST:event_botaoExcluiTelActionPerformed
+
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+        GerenciadorPessoasGUI gerenciadorP = new GerenciadorPessoasGUI();
+        gerenciadorP.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(EditaPessoa.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_botaoCancelarActionPerformed
     
     /**
      * @param args the command line arguments
@@ -311,11 +378,11 @@ public class EditaPessoa extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
+            public void run(){
                 new EditaPessoa().setVisible(true);
             }
         });
-    }
+    } 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botaoAddTel;
@@ -340,23 +407,5 @@ public class EditaPessoa extends javax.swing.JFrame {
     private javax.swing.JTextField txtTipoTel;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
-
-    void setTextField(Pessoa pessoa) {
-         //To change body of generated methods, choose Tools | Templates.
-        this.txtNome.setText(pessoa.getNome());
-        this.txtEmail.setText(pessoa.getEmail());
-        this.txtCodPessoa.setText(pessoa.getCodigo());
-        this.txtEndereco.setText(pessoa.getEndereco());
-        
-        
-        
-        //this.txtNome.setEditable(false);
-        //this.emailTf.setEditable(false);
-        //this.codpessoaTf.setEditable(false);
-        //this.enderecoTf.setEditable(false);
-        
-        //this.remove(this.botaoAddTel);
-      //  this.remove(this.botaoExcluirTel);
-        //this.remove(this.botaoCadastrar);
-    }
 }
+

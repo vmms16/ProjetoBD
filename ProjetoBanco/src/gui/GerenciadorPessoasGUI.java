@@ -86,8 +86,18 @@ public class GerenciadorPessoasGUI extends javax.swing.JFrame {
         });
 
         botaoEditarPessoa.setText("Editar Pessoa");
+        botaoEditarPessoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoEditarPessoaActionPerformed(evt);
+            }
+        });
 
         botaoVoltar.setText("Voltar");
+        botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVoltarActionPerformed(evt);
+            }
+        });
 
         botaoVisualizarPessoa.setText("Visualizar Pessoa");
         botaoVisualizarPessoa.addActionListener(new java.awt.event.ActionListener() {
@@ -177,6 +187,34 @@ public class GerenciadorPessoasGUI extends javax.swing.JFrame {
         }
        
     }//GEN-LAST:event_botaoVisualizarPessoaActionPerformed
+
+    private void botaoEditarPessoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarPessoaActionPerformed
+        try{  
+            int pessoaSelecionada = this.tabelaPessoa.getSelectedRow();
+            Pessoa pessoa = this.listaPessoas.get(pessoaSelecionada);
+            EditaPessoa editapessoa = new EditaPessoa();
+            ArrayList<Telefone> listaTelefonesPessoa = new TelefoneService().listarTelefones(pessoa);
+            //editapessoa.setTextField(pessoa);
+            editapessoa.setTextField(pessoa, listaTelefonesPessoa);
+            editapessoa.setVisible(true);
+            this.setVisible(false);
+            this.setDefaultCloseOperation(GerenciadorPessoasGUI.EXIT_ON_CLOSE);
+            
+            
+            
+           
+        }catch(ArrayIndexOutOfBoundsException e){
+            ErroItem erro = new ErroItem();
+            erro.setVisible(true);
+        }
+    }//GEN-LAST:event_botaoEditarPessoaActionPerformed
+
+    private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
+        InicioGUI inicio = new InicioGUI();
+        inicio.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(GerenciadorPessoasGUI.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_botaoVoltarActionPerformed
 
     /**
      * @param args the command line arguments

@@ -3,6 +3,7 @@ package service;
 import java.util.ArrayList;
 
 import dao.TelefoneDao;
+import dominio.Pessoa;
 import dominio.Telefone;
 
 public class TelefoneService {
@@ -24,5 +25,9 @@ public class TelefoneService {
 	public void deletarTelefone(Telefone telefone){
 		this.telefoneDao.deletarTelefone(telefone);
 	}
+
+    public ArrayList<Telefone> listarTelefones(Pessoa pessoa) {
+        return this.telefoneDao.getTelefones(pessoa);
+    }
 
 }

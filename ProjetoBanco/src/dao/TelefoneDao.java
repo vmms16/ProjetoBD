@@ -1,8 +1,10 @@
 package dao;
 
 
+import dominio.Pessoa;
 import java.util.ArrayList;
 import dominio.Telefone;
+import java.sql.SQLException;
 
 public class TelefoneDao{
 	
@@ -108,6 +110,45 @@ public class TelefoneDao{
 			}
 		db.desconectar();
 	}
-		
+
+    public ArrayList<Telefone> getTelefones(Pessoa pessoa) {
+        ArrayList<Telefone> listaTelefones = new ArrayList();
+        String codpessoa = pessoa.getCodigo();
+            try{
+			db.conectar();
+			String query= "SELECT * FROM TEL WHERE codpessoa ="+"'"+codpessoa+"';";
+			db.resultset =db.statement.executeQuery(query);
+			db.statement=db.connection.createStatement();
+			
+			
+			while(db.resultset.next()){
+				//String codPessoa= db.resultset.getString("codpessoa");
+				String tipo= db.resultset.getString("tipotel");
+				String numero= db.resultset.getString("numtel");
+				
+                                Telefone telefone= new Telefone();
+                                telefone.setCodigoPessoa(codpessoa);
+                                telefone.setNumero(numero);
+                                telefone.setTipo(tipo);
+                                
+                                
+                                listaTelefones.add(telefone);
+                                
+			}
+			
+			db.desconectar();
+                        
+                        return listaTelefones;
+				
+				
+		}catch (SQLException e){
+			System.out.println("Erro "+ e.getMessage());
+		}
+            
+            
+            return null;
+    }
+
+	
 	
 }

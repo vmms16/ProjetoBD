@@ -159,6 +159,11 @@ public class PessoaCadastroGUI extends javax.swing.JFrame {
 
         botaoCancelar.setFont(new java.awt.Font("MV Boli", 1, 14)); // NOI18N
         botaoCancelar.setText("Voltar");
+        botaoCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoCancelarActionPerformed(evt);
+            }
+        });
 
         botaoAddTel.setText("Add Tel");
         botaoAddTel.addActionListener(new java.awt.event.ActionListener() {
@@ -403,6 +408,13 @@ public class PessoaCadastroGUI extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_botaoExcluirTelActionPerformed
+
+    private void botaoCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoCancelarActionPerformed
+        GerenciadorPessoasGUI gerenciadorP = new GerenciadorPessoasGUI();
+        gerenciadorP.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(PessoaCadastroGUI.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_botaoCancelarActionPerformed
 
     /**
      * @param args the command line arguments

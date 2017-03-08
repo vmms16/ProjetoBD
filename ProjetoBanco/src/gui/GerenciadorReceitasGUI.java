@@ -52,7 +52,7 @@ public class GerenciadorReceitasGUI extends javax.swing.JFrame {
         botaoExcluirReceita = new javax.swing.JButton();
         botaoEditarReceita = new javax.swing.JButton();
         botaoVisualizarReceita = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        botaoVoltar = new javax.swing.JButton();
 
         listaReceitas = org.jdesktop.observablecollections.ObservableCollections.observableList(listaReceitas);
 
@@ -104,7 +104,12 @@ public class GerenciadorReceitasGUI extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Voltar");
+        botaoVoltar.setText("Voltar");
+        botaoVoltar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botaoVoltarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -118,7 +123,7 @@ public class GerenciadorReceitasGUI extends javax.swing.JFrame {
                     .addComponent(botaoExcluirReceita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(botaoEditarReceita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(botaoVisualizarReceita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(botaoVoltar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -135,7 +140,7 @@ public class GerenciadorReceitasGUI extends javax.swing.JFrame {
                         .addGap(29, 29, 29)
                         .addComponent(botaoVisualizarReceita)
                         .addGap(33, 33, 33)
-                        .addComponent(jButton1))
+                        .addComponent(botaoVoltar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
@@ -186,8 +191,28 @@ public class GerenciadorReceitasGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_botaoExcluirReceitaActionPerformed
 
     private void botaoEditarReceitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoEditarReceitaActionPerformed
-        ReceitaCadastroGUI cadastroReceitaGUI= new ReceitaCadastroGUI();
+        try{  
+            EditarReceitaGUI editarReceita= new EditarReceitaGUI();
+            int receitaSelecionada = this.tabelaReceitas.getSelectedRow();
+            Receita receita = this.listaReceitas.get(receitaSelecionada);
+            ArrayList<Ingrediente> listaIngredientesReceita = new IngredienteService().getListaIngredientesReceita(receita);
+            editarReceita.setTextField(receita, listaIngredientesReceita);
+            editarReceita.setVisible(true);
+            this.setVisible(false);
+            this.setDefaultCloseOperation(GerenciadorReceitasGUI.EXIT_ON_CLOSE);
+           
+        }catch(ArrayIndexOutOfBoundsException e){
+            ErroItem erro = new ErroItem();
+            erro.setVisible(true);
+        }
     }//GEN-LAST:event_botaoEditarReceitaActionPerformed
+
+    private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
+        InicioGUI inicio = new InicioGUI();
+        inicio.setVisible(true);
+        this.setVisible(false);
+        this.setDefaultCloseOperation(GerenciadorReceitasGUI.EXIT_ON_CLOSE);
+    }//GEN-LAST:event_botaoVoltarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -232,7 +257,7 @@ public class GerenciadorReceitasGUI extends javax.swing.JFrame {
     private javax.swing.JButton botaoEditarReceita;
     private javax.swing.JButton botaoExcluirReceita;
     private javax.swing.JButton botaoVisualizarReceita;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botaoVoltar;
     private javax.swing.JScrollPane jScrollPane1;
     private java.util.List<Receita> listaReceitas;
     private javax.swing.JTable tabelaReceitas;

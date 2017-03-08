@@ -5,6 +5,7 @@
  */
 package gui;
 
+import dominio.Pessoa;
 import dominio.Receita;
 
 /**
@@ -15,7 +16,7 @@ import dominio.Receita;
      
      private static Sessao instancia= new Sessao();
      private Receita receita= new Receita();
-     
+     private Pessoa pessoa = new Pessoa();
      
      private Sessao(){
          
@@ -32,5 +33,11 @@ import dominio.Receita;
      public Receita getReceita(){
          return this.receita;
      }
-    
+     
+     public void setPessoa(Pessoa pessoa){
+         this.pessoa = pessoa;
+     }
+     public Pessoa getPessoa(){
+         return this.pessoa;
+     }
 }
